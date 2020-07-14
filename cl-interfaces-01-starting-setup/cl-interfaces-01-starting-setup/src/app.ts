@@ -1,19 +1,20 @@
-interface Person {
-    name: string;
-    age: number;
+class ProjectInput {
+    templateElement: HTMLTemplateElement;
+    hostElement: HTMLDivElement;
+    element: HTMLFormElement;
 
-    greet(phrase: string): void;
+    constructor() {
+        this.templateElement = document.querySelector('#project-input')! as HTMLTemplateElement;
+        this.hostElement = document.querySelector('#app')! as HTMLDivElement;
 
-}
+        const importedNode = document.importNode(this.templateElement.content, true);
+        this.element = importedNode.firstElementChild as HTMLFormElement;
+        this.attach();
+    }
 
-let user1: Person;
-
-user1 = {
-    name: 'Carlo',
-    age: 28,
-    greet(phrase) {
-        console.log(phrase + ' ' + this.name);
+    private attach() {
+        this.hostElement.insertAdjacentElement('afterbegin', this.element);
     }
 }
 
-user1.greet('Yo man Im');
+const prjInput = new ProjectInput();
